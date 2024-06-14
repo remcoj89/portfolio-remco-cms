@@ -13,6 +13,7 @@ export const projectType = defineType({
     defineField({
       name: 'name',
       type: 'string',
+      title:"Titel",
       description: "Naam van het project",
       group: ['details', 'editorials'],
       validation: (rule) => rule
@@ -31,10 +32,22 @@ export const projectType = defineType({
       .error("Verplicht om een pagina te genereren op de website"),
     hidden: ({document}) => !document?.name,
     }),
+    // Subtitle field
+    defineField({
+      name: 'subtitle',
+      type: 'string',
+      title: "Sub titel",
+      description: "Slogan",
+      group: ['details', 'editorials'],
+      validation: (rule) => rule
+      .required()
+      .error("Verplicht om een pagina te genereren op de website"),
+    }),
     // Type of project field
     defineField({
       name: 'type',
       type: 'string',
+      title: 'Project type',
       description: "Selecteer klant of oefen project",
       options: {
         list: ['Oefen Project', 'Klant Project'],
@@ -48,7 +61,8 @@ export const projectType = defineType({
     defineField({
       name: 'stack',
       type: 'array',
-      description: "Selecteer de gebruikte tech",
+      title: "Gebruikte Stack",
+      description: "Selecteer de gebruikte technologie",
       of: [{type: 'string'}],
       options: {
         list: [
@@ -86,26 +100,48 @@ export const projectType = defineType({
     defineField({
       name: 'thumbnail',
       type: 'image',
+      title: "Thumbnail",
       description: "Thumbnail van de website",
-    }),
+      }),
+      // Meta Title
+      defineField({
+        name: 'metatitle',
+        type: 'string',
+        title: "Meta Title",
+        description: "Meta titles mogen maximaal 60 tekens lang zijn, inclusief spaties. ",
+        validation: rule => rule.required().min(10).max(60)
+        .error("De meta beschrijving moet minimaal 10 karakters zijn en maximaal 60 karakters")
+      }),
+      // Meta Description
+      defineField({
+        name: 'metadescription',
+        type: 'string',
+        title: "Meta Beschrijving",
+        description: "Meta descriptions worden afgekapt als ze te lang zijn. Als vuistregel kun je het beste 120 tot 160 tekens gebruiken.",
+        validation: rule => rule.required().min(50).max(160)
+        .error("De meta beschrijving moet minimaal 50 karakters zijn en maximaal 160 karakters")
+      }),
     // Source code field
     defineField({
       name: 'sourceCode',
       type: 'url',
+      Title:"Github Repo",
       description: "Link naar de Github repository",
     }),
     // Live view field
     defineField({
       name: 'liveView',
       type: 'url',
+      title:"Live Website",
       description: "Link naar de live website",
     }),
     // Project description Field
     defineField({
       name: 'description',
       type: 'array',
+      title: "Project beschrijving",
       description: "Beschrijving van het project",
-      of: [{type: 'block'}],
+      of: [{type: 'block'}, { type: 'image' }],
       validation: (rule) => rule
       .required()
       .error("Verplicht om een pagina te genereren op de website"),
